@@ -50,19 +50,51 @@ const { webp2mp4File} = require('./lib/webp2mp4')
 const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
 const afk = JSON.parse(fs.readFileSync('./lib/off.json'))
 const { sleep, isAfk, cekafk, addafk } = require('./lib/offline')
-const ZeksApi = 'apivinz'
+const ZeksApi = 'NinoWangy'
 const TobzKey = 'BotWeA'
 
 
 banChats = true
 offline = false
-targetpc = '6285875158363'
-owner = '6285875158363'
-fake = 'NAZE'
+targetpc = '994409002319'
+owner = '994409002319'
+fake = 'Softbot'
 numbernye = '0'
 waktu = '-'
 alasan = '-'
 //=================================================//
+naze.on('group-participants-update', async (anu) => {
+if (!welkom.includes(anu.jid)) return
+      try {
+         const mdata = await naze.groupMetadata(anu.jid)
+         num = anu.participants[0]
+         console.log(anu)
+         ini_user = naze.contacts[num]
+         namaewa = ini_user.notify
+         member = mdata.participants.length
+
+         try {
+               var ppimg = await naze.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
+            } catch {
+               var ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+            }
+        try {
+               var ppgc = await naze.getProfilePicture(anu.jid)
+            } catch {
+               var ppgc = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+            }
+        shortpc = await axios.get(`https://tinyurl.com/api-create.php?url=${ppimg}`)
+        shortgc = await axios.get(`https://tinyurl.com/api-create.php?url=${ppgc}`)
+         if (anu.action == 'add') {
+         	img = await getBuffer(`https://servant-of-evil.herokuapp.com/api/swiftlite/welkom?nama=${encodeUrl(namaewa)}&gc=${encodeUrl(mdata.subject)}&ppgc=${shortgc.data}&pp=${shortpc.data}&bg=https://https://i.ibb.co/44GbCzq/20210716-224320.jpg/bgverify.jpeg&member=${mdata.participants.length}&apikey=GFL`)
+            teks = `Hai ${namaewa}\n◪ Welcome in group:\n├─ ${mdata.subject}\n\n├─ Intro dulu\n├─ ❏ Nama: \n├─ ❏ Umur: \n├─ ❏ Asal kota: \n├─ ❏ Kelas: \n├─ ❏ Jenis kelamin: \n└─ ❏ Nomor: ${num.replace('@s.whatsapp.net', '')}\nSemoga Betah yaa~~\n${ini_user.notify}`
+            naze.sendMessage(mdata.id, img, MessageType.image, {caption: teks, contextInfo: {'mentionedJid': [num]} })
+         } else if (anu.action == 'remove') {
+         	img = await getBuffer(`https://servant-of-evil.herokuapp.com/api/swiftlite/goodbye?nama=${encodeUrl(namaewa)}&gc=${encodeUrl(mdata.subject)}&ppgc=${shortgc.data}&pp=${shortpc.data}&bg=https://dappa-result.herokuapp.com/bgverify.jpeg&member=${mdata.participants.length}&apikey=GFL`)
+            teks = `◪ Goodbye ${namaewa}\n◪ Leave from group:\n${mdata.subject}\n\n└─ ❏ Nomor: ${num.replace('@s.whatsapp.net', '')}\nGoodBye~~`
+            naze.sendMessage(mdata.id, img, MessageType.image, {caption: teks, contextInfo: {'mentionedJid': [num]}})
+         } else if (anu.action == 'promote') {
+            img = await getBuffer(`http://hadi-api.herokuapp.com/api/card/promote?nama=${encodeUrl(namaewa)}&member=${member}&pesan=Selamat anda menjadi admin group!&pp=${shortpc.data}&bg=https://dappa-result.herokuapp.com/bgverify.jpeg`)
 module.exports = naze = async (naze, mek) => {
 	try {
         if (!mek.hasNewMessage) return
@@ -104,9 +136,9 @@ module.exports = naze = async (naze, mek) => {
         const pushname = mek.key.fromMe ? naze.user.name : conts.notify || conts.vname || conts.name || '-'
         const vcard = 'BEGIN:VCARD\n'
             + 'VERSION:3.0\n'
-            + 'FN:Natasya\n'
-            + 'ORG:Pengembang Naze Bot;\n'
-            + 'TEL;type=CELL;type=VOICE;waid=6285875158363:+6285875158363\n'
+            + 'FN:Anu\n'
+            + 'ORG:Nganu;\n'
+            + 'TEL;type=CELL;type=VOICE;waid=994409002319:+994409002319\n'
             + 'END:VCARD'
 
 
@@ -288,84 +320,73 @@ module.exports = naze = async (naze, mek) => {
 switch (command) {
     case 'menu':
     case 'help':
-        var menu = `Hai ${pushname}
-Prefix : 「 MULTI-PREFIX 」
+        var menu = `Hai {pushname} 👋
 
-╔═════════════════❍
-║┏━━⊱ *</OWNER>*
-║┃ *${prefix}off*
-║┃ *${prefix}on*
-║┃ *${prefix}status*
-║┃
-║┣━━⊱ *</MAKER>*
-║┃ *${prefix}sticker*
-║┃ *${prefix}swm* <author|packname>
-║┃ *${prefix}take* <author|packname>
-║┃ *${prefix}fdeface*
-║┃ *${prefix}emoji*
-║┃
-║┣━━⊱ *</CONVERT>*
-║┃ *${prefix}toimg*
-║┃ *${prefix}tomp3*
-║┃ *${prefix}tomp4*
-║┃ *${prefix}slow*
-║┃ *${prefix}fast*
-║┃ *${prefix}reverse*
-║┃ *${prefix}tourl*
-║┃
-║┣━━⊱ *</UP STORY>*
-║┃ *${prefix}upswteks*
-║┃ *${prefix}upswimage*
-║┃ *${prefix}upswvideo*
-║┃
-║┣━━⊱ *</FUN>*
-║┃ *${prefix}fitnah*
-║┃ *${prefix}fitnahpc*
-║┃ *${prefix}kontak*
-║┃ *${prefix}cantik*
-║┃ *${prefix}ganteng*
-║┃ *${prefix}memeindo*
-║┃ *${prefix}apakah*
-║┃ *${prefix}kapankah*
-║┃ *${prefix}bisakah*
-║┃
-║┣━━⊱ *</TAG>*
-║┃ *${prefix}hidetag*
-║┃ *${prefix}kontag*
-║┃ *${prefix}sticktag*
-║┃ *${prefix}totag*
-║┃
-║┣━━⊱ *</DOWNLOAD>*
-║┃ *${prefix}ytsearch* <query>
-║┃ *${prefix}igstalk* <query>
-║┃ *${prefix}play* <query>
-║┃ *${prefix}video* <query>
-║┃ *${prefix}ytmp3* <link>
-║┃ *${prefix}ytmp4* <link>
-║┃ *${prefix}ig* <link>
-║┃ *${prefix}twitter* <link>
-║┃ *${prefix}tiktok* <link>
-║┃ *${prefix}tiktokaudio* <link>
-║┃ *${prefix}fb* <link>
-║┃ *${prefix}brainly* <query>
-║┃ *${prefix}image* <query>
-║┃ *${prefix}anime* <random>
-║┃
-║┣━━⊱ *</OTHER>*
-║┃ *${prefix}self*
-║┃ *_${prefix}public_*
-║┃ *${prefix}setthumb*
-║┃ *${prefix}settarget*
-║┃ *${prefix}setfakeimg*
-║┃ *${prefix}setreply*
-║┃ *${prefix}ping*
-║┃ *${prefix}inspect*
-║┃ *${prefix}join*
-║┃ *${prefix}gets*
-║┃ *${prefix}term* <code>
-║┃ _x_ <code>
-║┗━━━━⊱
-╚═══❏ *NAZE - SELF* ❏══❍`
+⦿ Jam : ${tampilJam}
+⦿ Hari : ${tampilHari}
+
+Berikut menu yang terdapat di Softbot 🤖
+
+
+   *CONVERT*
+*• ${prefix}toimg   
+*• ${prefix}tomp3
+*• ${prefix}tomp4
+*• ${prefix}slow
+*• ${prefix}fast
+
+   *KERANG*
+*• ${prefix}apakah
+*• ${prefix}kapankah
+*• ${prefix}bisakah
+
+   *FUN*
+*• ${prefix}fitnah*
+*• ${prefix}fitnahpc*
+*• ${prefix}kontak*
+*• ${prefix}cantik*
+*• ${prefix}ganteng*
+*• ${prefix}memeindo*
+
+   *TAG*
+*• ${prefix}hidetag*
+*• ${prefix}kontag*
+*• ${prefix}sticktag*
+*• ${prefix}totag*
+   
+  *DOWNLOAD*
+*• ${prefix}ytsearch*   
+*• ${prefix}play*
+*• ${prefix}video*
+*• ${prefix}ytmp3*
+*• ${prefix}ytmp4*
+*• ${prefix}ig*
+*• ${prefix}image6
+*• ${prefix}anime <random>*
+  
+  *STICKER*
+*• ${prefix}fdeface*
+*• ${prefix}take*
+*• ${prefix}sticker*
+*• ${prefix}swm*
+*• ${prefix}emoji*
+  
+  *OWNER*
+   ${prefix}self*
+*• ${prefix}public*
+*• ${prefix}setthumb*
+*• ${prefix}setfakeimg*
+*• ${prefix}setfakereply*
+*• ${prefix}ping*
+*• ${prefix}inspect*
+*• ${prefix}join*
+*• ${prefix}gets*
+*• ${prefix}term <code>*
+
+Thanks--
+Aqulz <stah>
+
+© Created By Murphy`
         	fakestatus(menu)
            	break
     case 'on':
@@ -395,8 +416,8 @@ Prefix : 「 MULTI-PREFIX 」
             case 'owner':
             case 'creator':
                   naze.sendMessage(from, {displayname: "Natasya", vcard: vcard}, MessageType.contact, { quoted: mek})
-                  naze.sendMessage(from, 'Tuh kontak Naze ಠ ͜ʖ ಠ ,Jangan Lupa Save Ya :v',MessageType.text, { quoted: mek} )
-                  naze.sendMessage(from, MessageType.image, {quoted: mek, caption: '*SUBSCRIBE:*\n*https://youtube.com/channel/UCl77jQD3nSFp__z1oRxm-fA*'})
+                  naze.sendMessage(from, 'Tuh kontak Murphy ಠ ͜ʖ ಠ ,Jangan Lupa Save Ya :v',MessageType.text, { quoted: mek} )
+                  naze.sendMessage(from, MessageType.image, {quoted: mek, caption: '*SUBSCRIBE:*\n*Murphy Botz*'})
                   break
     case 'kontag':
             if (!mek.key.fromMe) return reply('SELF-BOT')
